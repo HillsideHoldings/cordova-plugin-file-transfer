@@ -1007,7 +1007,7 @@ public class FileTransfer extends CordovaPlugin {
                     synchronized (context) {
                         File file = context.targetFile;
                         if (file != null) {
-                            file.delete();
+                            //file.delete();
                         }
                         // Trigger the abort callback immediately to minimize latency between it and abort() being called.
                         JSONObject error = createFileTransferError(ABORTED_ERR, context.source, context.target, null, -1, null);

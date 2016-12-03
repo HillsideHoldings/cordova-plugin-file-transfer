@@ -670,9 +670,9 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
         delegate.backgroundTaskID = UIBackgroundTaskInvalid;
     }
 
-    if (self.direction == CDV_TRANSFER_DOWNLOAD) {
-        [self removeTargetFile];
-    }
+//    if (self.direction == CDV_TRANSFER_DOWNLOAD) {
+//        [self removeTargetFile];
+//    }
 }
 
 - (void)cancelTransferWithError:(NSURLConnection*)connection errorMessage:(NSString*)errorMessage
@@ -757,6 +757,8 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
         if (self.targetFileHandle == nil) {
             [self cancelTransferWithError:connection errorMessage:@"Could not open target file for writing"];
         }
+		[self.targetFileHandle seekToEndOfFile];
+
         DLog(@"Streaming to file %@", filePath);
     }
 }
