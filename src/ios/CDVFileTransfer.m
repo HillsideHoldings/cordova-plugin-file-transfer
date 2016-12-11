@@ -649,16 +649,6 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
     }
 }
 
-- (void)removeTargetFile
-{
-    NSFileManager* fileMgr = [NSFileManager defaultManager];
-
-    NSString *targetPath = [self targetFilePath];
-    if ([fileMgr fileExistsAtPath:targetPath])
-    {
-        [fileMgr removeItemAtPath:targetPath error:nil];
-    }
-}
 
 - (void)cancelTransfer:(NSURLConnection*)connection
 {
@@ -670,9 +660,6 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
         delegate.backgroundTaskID = UIBackgroundTaskInvalid;
     }
 
-//    if (self.direction == CDV_TRANSFER_DOWNLOAD) {
-//        [self removeTargetFile];
-//    }
 }
 
 - (void)cancelTransferWithError:(NSURLConnection*)connection errorMessage:(NSString*)errorMessage
@@ -745,11 +732,6 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
             } else {
                 [self cancelTransferWithError:connection errorMessage:@"Could not create path to save downloaded file"];
             }
-            return;
-        }
-        // create target file
-        if ([[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil] == NO) {
-            [self cancelTransferWithError:connection errorMessage:@"Could not create target file"];
             return;
         }
         // open target file for writing
