@@ -734,6 +734,11 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
             }
             return;
         }
+        // create target file		
+        if ([[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil] == NO) {		
+            [self cancelTransferWithError:connection errorMessage:@"Could not create target file"];		
+            return;		
+        }
         // open target file for writing
         self.targetFileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
         if (self.targetFileHandle == nil) {
