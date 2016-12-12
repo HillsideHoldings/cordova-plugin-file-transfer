@@ -746,7 +746,7 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
         }
 		[self.targetFileHandle seekToEndOfFile];
 
-        DLog(@"Streaming to file %@", filePath);
+        DLog(@"Streaming to file with append option %@", filePath);
     }
 }
 
