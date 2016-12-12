@@ -735,16 +735,21 @@ static CFIndex WriteDataToStream(NSData* data, CFWriteStreamRef stream)
             return;
         }
         // create target file		
-        if ([[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil] == NO) {		
-            [self cancelTransferWithError:connection errorMessage:@"Could not create target file"];		
-            return;		
+        if ( ![[NSFileManager defaultManager] fileExistsAtPath:filePath] ) {
+            if ([[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil] == NO) {
+                [self cancelTransferWithError:connection errorMessage:@"Could not create target file"];
+                return;
+            }
         }
         // open target file for writing
         self.targetFileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
         if (self.targetFileHandle == nil) {
             [self cancelTransferWithError:connection errorMessage:@"Could not open target file for writing"];
         }
-		[self.targetFileHandle seekToEndOfFile];
+		
+        [self.targetFileHandle seekToEndOfFile];
+        DLog (@"Offset after seek = %llu", [self.targetFileHandle offsetInFile]);
+
 
         DLog(@"Streaming to file with append option %@", filePath);
     }
