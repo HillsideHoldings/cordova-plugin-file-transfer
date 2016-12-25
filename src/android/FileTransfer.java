@@ -983,9 +983,9 @@ public class FileTransfer extends CordovaPlugin {
                         result = new PluginResult(PluginResult.Status.ERROR, createFileTransferError(CONNECTION_ERR, source, target, connection, null));
                     }
                     // Remove incomplete download.
-                    if (!cached && result.getStatus() != PluginResult.Status.OK.ordinal() && file != null) {
-                        file.delete();
-                    }
+//                    if (!cached && result.getStatus() != PluginResult.Status.OK.ordinal() && file != null) {
+//                        file.delete();
+//                    }
                     context.sendPluginResult(result);
                 }
             }
